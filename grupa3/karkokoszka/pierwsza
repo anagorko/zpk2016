@@ -1,0 +1,29 @@
+#include <iostream>
+
+using namespace std;
+
+bool pierwsza;
+int liczba;
+
+int main()
+{
+    int l=2;
+    int ile=0;
+    cin>>liczba;
+
+    while(l<liczba){
+       if(liczba%l==0){
+                ile++;
+                if(ile>0){
+                    pierwsza=false;
+                    break;
+                }
+
+       }
+       pierwsza=true;
+       l++;
+    }
+
+cout<<pierwsza;
+    return 0;
+}
