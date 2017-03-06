@@ -1,0 +1,29 @@
+#include <iostream>
+
+using namespace std;
+
+bool pierwsza(int n){
+
+if(n< 2) return false;
+
+for(int i=n;sqrt(n),i++){
+        if(n%i==0) {
+            return false;
+            return true;
+        }
+} }
+
+int main() {
+int n;
+
+cout << "Wpisz liczbe: " <<endl;
+cin >> n >>endl;
+
+if(czy_pierwsza(n)) //lub czy_pierwsza(n)==1
+    cout<< "pierwsza"<<endl;
+  else
+    cout<<"zlozona"<<endl;
+
+  return 0;
+
+}
