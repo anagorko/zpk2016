@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int n;
+
+int main()
+{
+    cout << "Podaj liczbe"<<endl;
+    cin >> n;
+    
+    for(int i=2; i<n; i++){
+        if (n%i ==0){
+            cout<<"Liczba "<<n<<" jest zlozona"<<endl;
+            return 0;
+        }
+    }
+
+    cout <<"Liczba "<<n<<" jest pierwsza"<<endl;
+    return 0;
+}
