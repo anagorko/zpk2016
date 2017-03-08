@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int a,w,t=0;
+    cin>>a;
+
+if (a==2)
+ {cout<<"pierwsza";}
+else
+ {
+  for(int i = 2; i < a; i++)
+    {
+     w = a % i;
+      if( w == 0)
+       {
+         t=1;
+         cout<< "zlozona";
+         break;
+       }
+      else t=0;
+    }
+ }
+
+if(t=0){ cout<< "pierwsza";}
+}
