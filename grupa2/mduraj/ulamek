@@ -1,0 +1,47 @@
+#include <iostream>
+
+using namespace std;
+
+
+class Ulamek {
+  int l, m; // licznik , mianownik
+public:
+    friend ostream& operator<<(ostream& os, const Ulamek &w);
+  Ulamek (){
+      l=1;
+      m=1;
+}
+
+  Ulamek(int _l, int _m){
+  l=_l;
+  m=_m;
+  }
+
+  Ulamek& operator+=(const Ulamek &w){
+  l=l*w.m+w.l*m;
+  m=m*w.m;
+  return *this;
+  }
+
+  Ulamek operator+(const Ulamek &w){
+  Ulamek tmp = *this;
+  tmp += w;
+  return tmp;
+  }
+
+};
+
+ostream& operator <<(ostream& os, const Ulamek &w){
+os << w.l << " / " << w.m;
+return os;
+}
+
+int main()
+{
+Ulamek a(3,8), b(1,8);
+cout << (a + b) << endl;
+    return 0;
+}
+
+
+
