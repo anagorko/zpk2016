@@ -28,11 +28,14 @@ public:
 
     Ulamek& operator+=(Ulamek w){
 
-    int nwd =  NWD(m,w.m) ;
+    l = (w.l*m+l*w.m);
 
-    l = (w.l*m+l*w.m) / nwd;
+    m  =  m*w.m ;
 
-    m  =  m*w.m / nwd ;
+    int nwd =  NWD(l,m) ;
+
+    l /= nwd;
+    m /= nwd;
 
     return *this;
     }
