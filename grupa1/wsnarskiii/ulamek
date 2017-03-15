@@ -1,0 +1,52 @@
+#include <iostream>
+
+using namespace std;
+
+
+class Dziesietny {
+  int c;
+  int u; 
+
+public:
+  friend istream& operator>>(istream& i, Dziesietny& d);
+  friend ostream& operator<<(ostream &o, Dziesietny d);
+  Dziesietny& operator+=(Dziesietny b) {
+    c = c*b.u+b.c*u;
+    u = b.u*u;
+  
+    // skracanie
+    //for(int i=1;i<20;i++){
+    //if(c%2==0 && u%2==0) {c*=0.5;u*=0.5;}}
+    
+    return *this;
+  }
+
+  Dziesietny operator+(Dziesietny b) {
+    Dziesietny tmp = *this;
+    tmp += b;
+    return tmp;
+  }
+};
+
+istream& operator>>(istream& i, Dziesietny& d) {
+  i >> d.c;
+  char tmp;
+  i >> tmp;
+  i >> d.u;
+  return i;
+}
+
+ostream& operator<<(ostream &o, Dziesietny d) {
+  o << d.c << "/" << d.u;
+  return o;
+}
+
+int main()
+{
+  Dziesietny a, b;
+  cout << "Podaj dwa ulamki dziesietne: " << endl;
+  cout << "a="; cin >> a;
+  cout << "b="; cin >> b;
+  cout << "Suma " << a << "+" << b << "=" << (a+b);
+  return 0;
+}
