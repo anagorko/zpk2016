@@ -13,10 +13,16 @@ public:
   Dziesietny& operator+=(Dziesietny b) {
     c = c*b.u+b.c*u;
     u = b.u*u;
-  
-    // skracanie
-    //for(int i=1;i<20;i++){
-    //if(c%2==0 && u%2==0) {c*=0.5;u*=0.5;}}
+    
+   // skracanie ulamków:
+   int m=0;    
+   if(c>=u) m=c; else m=u;    
+   for(int i=2;i<=m;i++) {        
+   for(int j=1;j<1000;j++)  { 
+   if(c%i==0 && u%i==0) {c=c/i;u=u/i;}
+        }    
+   }
+    
     
     return *this;
   }
