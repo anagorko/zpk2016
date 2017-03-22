@@ -15,14 +15,17 @@ class Stack
     Element* t;
 
 public:
+    
     Stack() {
-        t -> prev = NULL;
+        t = NULL;
     }    // inicjalizuje pusty stos
+
     ~Stack() {}   // kasuje wszystkie elementy
 
     void pop() {
 
         if(t == NULL) {return; }
+
         t = t -> prev;
 
     }  // kasuje gorny element stosu
@@ -30,26 +33,30 @@ public:
 
     float top() {
 
-    return t -> value;
+        if (t != NULL) {return t -> value; }
 
     }  // zwraca wartosc na gorze stosu
 
     bool empty() {
 
-        if(t -> prev == NULL) {return 1;}
-                            else {return 0;}
+        if(t == NULL) {return 1;}
+                else {return 0;}
 
     }// true = stos jest pusty
+
     void push(float a) {
 
-    t -> value = a;
-
+        Element* t1 = new Element;
+        t1 -> value = a;
+        t1 -> prev = t;
+        t = t1;
     } // umieszcza wartosc na wierzcholku stosu
 };
 
 int main()
 {
     Stack s;
+
 
     while (!cin.eof()) {
         string token;
@@ -62,6 +69,7 @@ int main()
             l = s.top(); s.pop();
 
             s.push(l + r);
+
         } else if (token == "*") {
             float l, r;
 
@@ -71,6 +79,7 @@ int main()
             s.push(l * r);
         } else if (token == "=") {
             cout << s.top() << endl;
+            break; // wstawiłem break'a zeby program konczyl sie po "="
         } else {
             s.push(atof(token.c_str()));
         }
