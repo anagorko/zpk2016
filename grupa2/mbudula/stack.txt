@@ -1,0 +1,77 @@
+#include <iostream>
+
+using namespace std;
+
+class Stack{
+    struct Element
+    {
+        Element* prev;
+        float value;
+    };
+
+    Element* t;
+
+public:
+    Stack(){
+        t = NULL;
+    }   // inicjalizuje pusty stos
+
+    // kasuje wszystkie elementy
+
+    void pop(){
+        if (t == NULL){
+            return;
+        }
+        t = t -> prev;
+    }  // kasuje gorny element stosu
+
+    float top(){
+        return t -> value;
+    };  // zwraca wartosc na gorze stosu
+
+    bool empty(){
+        if(t == NULL){
+            return true;
+        }
+        return false;
+    } // true = stos jest pusty
+
+    void push(float x){
+        Element* s = new Element;
+        s -> value = x;
+        s -> prev = t;
+        t = s;
+    }; // umieszcza wartosc na wierzcholku stosu
+};
+
+#include<stdlib.h>
+
+int main()
+{
+    Stack s;
+
+    while (!cin.eof()) {
+        string token;
+        cin >> token;
+
+        if (token == "+") {
+            float l, r;
+
+            r = s.top(); s.pop();
+            l = s.top(); s.pop();
+
+            s.push(l + r);
+        } else if (token == "*") {
+            float l, r;
+
+            r = s.top(); s.pop();
+            l = s.top(); s.pop();
+
+            s.push(l * r);
+        } else if (token == "=") {
+            cout << s.top() << endl;
+        } else {
+            s.push(atof(token.c_str()));
+        }
+    }
+}
