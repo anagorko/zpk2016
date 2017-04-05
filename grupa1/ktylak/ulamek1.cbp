@@ -1,44 +1,41 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<CodeBlocks_project_file>
-	<FileVersion major="1" minor="6" />
-	<Project>
-		<Option title="ulamek" />
-		<Option execution_dir="C:/Users/kt348925/Desktop/projekty-ZPK/ulamek/" />
-		<Option pch_mode="2" />
-		<Option compiler="gcc" />
-		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/ulamek" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-g" />
-				</Compiler>
-			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/ulamek" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-O2" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-				</Linker>
-			</Target>
-		</Build>
-		<Compiler>
-			<Add option="-Wall" />
-			<Add option="-fexceptions" />
-		</Compiler>
-		<Unit filename="ulamek/main.cpp" />
-		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-			<lib_finder disable_auto="1" />
-		</Extensions>
-	</Project>
-</CodeBlocks_project_file>
+#include <iostream>
+
+using namespace std;
+
+class Ulamek {
+  int l, m; // licznik , mianownik
+
+public:
+  Ulamek ();
+  Ulamek(int _l, int _m)
+  {
+        l = _l;
+        m = _m;
+  }
+  Ulamek& operator+=(const Ulamek &w){
+        l *= w.m;
+        l += w.l * m;
+        m *= m;
+    return *this;
+  }
+  Ulamek operator+(const Ulamek &w){
+        Ulamek t = *this;
+        t += w;
+        return t;
+  }
+
+
+  friend ostream& operator<<(ostream& o, const Ulamek &w);
+};
+
+ostream& operator<<(ostream& o, const Ulamek &w){
+    o << w.l << "/" << w.m;
+    return o;
+}
+
+int main()
+{
+  Ulamek a(3,8), w(1,8);
+  cout << (a+w) << endl;
+  return 0;
+}
