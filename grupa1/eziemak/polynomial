@@ -1,0 +1,113 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Polynomial
+{
+    vector<double> a;
+
+public:
+    Polynomial();
+
+    double getA(int) const;
+    void setA(int, double);
+
+    int deg() const;
+
+    Polynomial& operator+=(const Polynomial &q);
+    const Polynomial operator+(const Polynomial &q) const;
+
+    Polynomial& operator*=(const Polynomial &q);
+    const Polynomial operator*(const Polynomial &q) const;
+
+    Polynomial& operator-=(const Polynomial &q);
+    const Polynomial operator-(const Polynomial &q) const;
+
+    bool operator==(const Polynomial &q) const;
+    bool operator!=(const Polynomial &q) const;
+
+    double v(double x) const;
+
+    friend ostream& operator<<(ostream&, const Polynomial&);
+};
+
+Polynomial::Polynomial() {
+    vector<double> b;
+    a = b;
+}
+
+double Polynomial::getA(int i) const {
+    return a[i];
+}
+
+void Polynomial::setA(int i, double w) {
+    if (i <= a.size()) {a[i] = w;}
+        else {
+            int j = a.size() - 1;
+            while(j < i) {
+            j++;
+            a.push_back(0); }
+                a.push_back(w);
+             }
+}
+
+int Polynomial::deg() const {
+    return a.size();
+}
+
+Polynomial& Polynomial::operator+=(const Polynomial &q) {
+    if(q.a.size() > a.size())
+    {
+      a.resize(q.a.size());
+    }
+
+    for(int i = 0; i<a.size(); i++)
+        {
+            a[i] = a[i] + q.a[i];
+        }
+
+    while(*a.end() == 0) {
+        a.resize(a.size() - 1);
+    }
+
+    return *this;
+}
+
+const Polynomial Polynomial::operator+(const Polynomial &q) const {
+    Polynomial tmp = *this;
+    tmp += q;
+    return tmp;
+}
+
+Polynomial& Polynomial::operator-=(const Polynomial &q) {
+    
+    if(q.a.size() > a.size()) {
+        a.resize(q.a.size());
+        }
+
+    for(int i = 0; i<a.size(); i++) {
+            a[i] = a[i] - q.a[i];
+        }
+        
+    while(*a.end() == 0) {
+        a.resize(a.size() - 1);
+        }
+    
+    return *this;
+}
+
+const Polynomial Polynomial::operator-(const Polynomial &q) const {
+    Polynomial tmp = *this;
+    tmp -= q;
+    return tmp;
+}
+
+
+void div(const Polynomial &W, const Polynomial &P, Polynomial &Q, Polynomial &R);
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    return 0;
+}
