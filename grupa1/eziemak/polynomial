@@ -6,6 +6,31 @@ using namespace std;
 class Polynomial
 {
     vector<double> a;
+    friend ostream& operator<<(ostream &o, Polynomial x) {
+
+    o << "W = ";
+
+    for(int i = 0; i<x.a.size(); i++) {
+
+        if(i == 0) {o << x.a[i]; }
+                    else {
+        if(i == 1) {
+                    if(x.a[i] == 0) {;} else {
+                    if(x.a[i] > 0) {
+                            o << " + " << x.a[i] << "*x"; }
+                        else {
+                                o << " - " << -x.a[i] << "*x"; }}
+                    }
+            else   {
+                    if(x.a[i] == 0) {;} else {
+                    if(x.a[i] > 0) {
+                            o << " + " << x.a[i] << "*x^"<< i; }
+                        else {
+                                o << " - " << -x.a[i] << "*x^" << i; }}}
+                            }
+                }
+ return o;
+}
 
 public:
     Polynomial();
@@ -29,7 +54,7 @@ public:
 
     double v(double x) const;
 
-    friend ostream& operator<<(ostream&, const Polynomial&);
+
 };
 
 Polynomial::Polynomial() {
@@ -42,9 +67,12 @@ double Polynomial::getA(int i) const {
 }
 
 void Polynomial::setA(int i, double w) {
-    if (i <= a.size()) {a[i] = w;}
+
+    if (i <= a.size()) {
+            if (a.size() == 0) {a.push_back(0);}
+            a[i] = w;}
         else {
-            int j = a.size() - 1;
+            int j = a.size();
             while(j < i) {
             j++;
             a.push_back(0); }
@@ -53,23 +81,38 @@ void Polynomial::setA(int i, double w) {
 }
 
 int Polynomial::deg() const {
-    return a.size();
+    for(int i = a.size() - 1; i >= 0; i--)
+    {
+        if(a[i] != 0) {return i;}
+    }
 }
 
 Polynomial& Polynomial::operator+=(const Polynomial &q) {
-    if(q.a.size() > a.size())
-    {
-      a.resize(q.a.size());
-    }
 
-    for(int i = 0; i<a.size(); i++)
+vector<double> temp = a;
+Polynomial _q = q;
+
+
+    if(q.a.size() > a.size()) {
+      temp.resize(q.a.size()); }
+
+    else {_q.a.resize(temp.size());}
+
+    for(int i = 0; i < temp.size(); i++)
         {
-            a[i] = a[i] + q.a[i];
+            temp[i] += _q.a[i];
         }
 
-    while(*a.end() == 0) {
-        a.resize(a.size() - 1);
+    int i = temp.size() - 1;
+
+    while(temp[i] == 0) {
+        if(i = 0) break;
+        temp.resize(temp.size() - 1);
+        i--;
     }
+
+    a.resize(temp.size());
+    a = temp;
 
     return *this;
 }
@@ -81,19 +124,30 @@ const Polynomial Polynomial::operator+(const Polynomial &q) const {
 }
 
 Polynomial& Polynomial::operator-=(const Polynomial &q) {
-    
-    if(q.a.size() > a.size()) {
-        a.resize(q.a.size());
-        }
 
-    for(int i = 0; i<a.size(); i++) {
-            a[i] = a[i] - q.a[i];
-        }
-        
-    while(*a.end() == 0) {
-        a.resize(a.size() - 1);
-        }
-    
+vector<double> temp = a;
+Polynomial _q = q;
+
+
+    if(q.a.size() > a.size()) {
+      temp.resize(q.a.size()); }
+
+    else {_q.a.resize(temp.size());}
+
+    for(int i = 0; i < temp.size(); i++) {
+            temp[i] -= _q.a[i]; }
+
+    int i = temp.size() - 1;
+
+    while(temp[i] == 0) {
+        if(i = 0) break;
+        temp.resize(temp.size() - 1);
+        i--;
+    }
+
+    a.resize(temp.size());
+    a = temp;
+
     return *this;
 }
 
@@ -103,11 +157,104 @@ const Polynomial Polynomial::operator-(const Polynomial &q) const {
     return tmp;
 }
 
+Polynomial& Polynomial::operator*=(const Polynomial &q) {
+
+    vector<double> wynik;
+
+    wynik.resize(a.size() + q.a.size() - 1);
+    a.resize(a.size() + q.a.size() - 1);
+
+    for(int i = 0; i < a.size(); i++) {
+        for(int j = 0; j < q.a.size(); j++) {
+            wynik[i+j] += a[i] * q.a[j];
+        }
+    }
+
+    a = wynik;
+
+    return *this;
+
+}
+
+const Polynomial Polynomial::operator*(const Polynomial &q) const {
+
+    Polynomial temp = *this;
+
+    temp *= q;
+
+    return temp;
+
+}
+
+bool Polynomial::operator==(const Polynomial &q) const {
+
+vector<double> _a = a;
+vector<double> _q = q.a;
+
+if(_a.size() < _q.size()) {
+        _a.resize(_q.size()); }
+        else {
+            _q.resize(_a.size());
+        }
+
+for(int i = 0; i < _a.size(); i++)  {
+        if(_a[i] != _q[i]) {return 0;}
+    }
+
+return 1;
+
+}
+
+bool Polynomial::operator!=(const Polynomial &q) const {
+
+Polynomial temp = *this;
+
+if(temp == q) {return 0;}
+else {return 1;}
+
+}
 
 void div(const Polynomial &W, const Polynomial &P, Polynomial &Q, Polynomial &R);
 
 int main()
 {
-    cout << "Hello world!" << endl;
+    Polynomial X, Y, Z;
+
+    X.setA(0, 4); X.setA(3, 2); X.setA(7, -3); X.setA(1, 4); X.setA(6, 10);
+
+    cout<<X<<endl;
+
+    Y.setA(0,2); Y.setA(3,5); Y.setA(10,10); Y.setA(6, 10);
+
+    cout<<Y<<endl;
+
+    Z = X;
+
+    Z *= Y;
+
+    cout<<Z<<endl;
+
+    cout<<X*Y<<endl;
+
+    cout<<(X==Y)<<endl;
+
+    cout<<(X!=Y)<<endl;
+
+    Z = X;
+
+    cout<<(Z!=X)<<endl;
+
+    Z.setA(100, 0);
+
+    cout<<(Z==X)<<endl;
+
+    cout<<X.deg()<<", "<<Y.deg()<<", "<<Z.deg()<<endl;
+
+    cout<<X - Y<<endl;
+
+    cout<<X + Y<<endl;
+
+    cout<<Z - X<<endl;
+
     return 0;
 }
