@@ -1,0 +1,5 @@
+1 Jan Nowak jn@gg.com 543234643
+2 Helena Nowak hn@gg.com 654325876
+3 Hanna Nowak hjuniorn@gg.com 732123332
+4 Ryszard Nowak rn@gg.com 432346435
+5 Maciek Nowak mn@gg.com 0
