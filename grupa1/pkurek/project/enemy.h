@@ -15,11 +15,10 @@ class enemy {
     protected:
         cpu* game;
         p position;
-        int segment;
-        double speed;
+        int segment = 1;
         double hp;
         double size;
-        color enemy_color;
+        double speed;
     public:
         virtual void dr_enemy() = 0;
         void move_enemy(vector<p>& path, int k);
@@ -32,6 +31,10 @@ class enemy {
 
 class basic_enemy : public enemy {
     private:
+        double base_hp = 10;
+        double base_size = 10; 
+        double enemy_speed = 50;
+        color enemy_color = color(120, 120, 0, 128);
 
     public:
         basic_enemy(cpu* _game);

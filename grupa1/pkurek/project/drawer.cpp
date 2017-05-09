@@ -63,3 +63,33 @@ void drawer::dr_effects(vector<effect*>& effects) {
    } 
 }
 
+void drawer::dr_stats(double money, int life, int level) {
+    dr_money(money);
+    dr_life(life);
+    dr_level(level);
+}
+
+void drawer::dr_life(int life) {
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 
+            life_position.x, life_position.y, 0,
+            ("Life " + to_string(life)).c_str() );
+}
+
+void drawer::dr_money(double money) {
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 
+            money_position.x, money_position.y, 0,
+            ("Money " + to_string((int)money)).c_str() );
+}
+
+void drawer::dr_level(int level) {
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 
+            level_position.x, level_position.y, 0,
+            ("Level " + to_string(level)).c_str() );
+}
+
+void drawer::load_fonts() {
+    fonts.push_back(al_load_ttf_font("courier.ttf", 16, 0));
+    if(!fonts[0]) {
+        fprintf(stderr, "could not load font courier16");
+    }
+}

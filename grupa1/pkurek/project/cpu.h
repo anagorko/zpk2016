@@ -21,7 +21,7 @@ class cpu {
 
     private:
         int lives = 20;
-        int level = 0;
+        int level = 3;
         double speed = 10;
         double money = 100;
         int show_range = 1;

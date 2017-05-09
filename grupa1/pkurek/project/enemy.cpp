@@ -10,7 +10,7 @@ void enemy::move_enemy(vector<p>& path, int k){
     if(dist_from_end > move_by) {
         position = move(position, path[segment], move_by);
     } else 
-        if (path.size() > (segment - 1)) {
+        if (path.size() - 1 > segment) {
         position = move(path[segment], path[segment+1], (move_by - dist_from_end));
         segment = segment + 1;}
         else {game -> enemy_scored(k);}
@@ -45,12 +45,10 @@ void basic_enemy::dr_enemy() {
 
 basic_enemy::basic_enemy(cpu* _game) {
     game = _game;
-    segment = 1;
     position = game -> get_start();
-    speed = 100;
-    hp = 10 + 10 * game -> get_level();
-    size = 10 + game -> get_level();
-    enemy_color = color(120,120,0,128);
+    hp = base_hp + base_hp * (game -> get_level());
+    size = base_size + (game -> get_level());
+    speed = enemy_speed;
 }
 
 

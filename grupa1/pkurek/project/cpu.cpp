@@ -3,6 +3,7 @@
 cpu::cpu() {
     paint.set_window_size(window_size);
     paint.set_board(board);
+    paint.load_fonts();
 }
 
 bool cpu::is_inboard(p& A, vector<p>& board) {
@@ -20,6 +21,7 @@ void cpu::display_all() {
     paint.dr_effects(effects);
     remove_old_effects();
     paint.dr_border();
+    paint.dr_stats(money, lives, level);
     al_flip_display();
 }
 
@@ -43,7 +45,10 @@ void cpu::add_laser_effect(p& A, p& B){
     effects.push_back(new laser_effect(A, B));
 }
 
-void cpu::enemy_scored(int k){}
+void cpu::enemy_scored(int k){
+    lives--;
+    kill_enemy(k);
+}
 
 void cpu::move_enemies(){
     for(int i = 0; i < enemies.size(); i++) {
