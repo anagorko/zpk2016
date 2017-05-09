@@ -27,6 +27,10 @@ void enemy::deal_damage(int id, double damage) {
     }
 }
 
+double enemy::get_money() {
+    return money;
+}
+
 enemy::~enemy(){}
 
 //************************************************************
@@ -46,9 +50,10 @@ void basic_enemy::dr_enemy() {
 basic_enemy::basic_enemy(cpu* _game) {
     game = _game;
     position = game -> get_start();
-    hp = base_hp + base_hp * (game -> get_level());
+    hp = base_hp + base_hp * (game -> get_level()) * (game -> get_level());
     size = base_size + (game -> get_level());
     speed = enemy_speed;
+    money = base_money + base_money * (game -> get_level()) / 2;
 }
 
 

@@ -19,10 +19,13 @@ class enemy {
         double hp;
         double size;
         double speed;
+        double money;
+        
     public:
         virtual void dr_enemy() = 0;
         void move_enemy(vector<p>& path, int k);
         void deal_damage(int id, double damage);
+        double get_money();
         virtual ~enemy();
         
         p& get_position();
@@ -31,9 +34,11 @@ class enemy {
 
 class basic_enemy : public enemy {
     private:
-        double base_hp = 10;
-        double base_size = 10; 
+        double base_hp = 2;
+        double base_size = 10;
         double enemy_speed = 50;
+        double base_money = 1;
+
         color enemy_color = color(120, 120, 0, 128);
 
     public:

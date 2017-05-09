@@ -19,7 +19,7 @@ class cpu;
 class drawer {
     private:
         color bg_color = color(130,0,0,255);
-        color border_color = color(0,0,150,255);
+        color border_color = color(0,0,50,255);
         color path_color = color(50,0,0,255);
         p window_size;
         vector<p> board;

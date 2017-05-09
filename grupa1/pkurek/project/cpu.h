@@ -21,7 +21,7 @@ class cpu {
 
     private:
         int lives = 20;
-        int level = 3;
+        int level = 1;
         double speed = 10;
         double money = 100;
         int show_range = 1;
@@ -29,6 +29,8 @@ class cpu {
         double path_radius = 30;
         double refresh = 60; //times per sec
         string shoot_type = "closest";
+
+        double laser_cost = 30;
 
         vector<p> board = {p(100,100), p(700, 100), p(700,500), p(100, 500)}; 
             // vector of four points - clockwise
@@ -58,11 +60,14 @@ class cpu {
        void kill_enemy(int id);
        void remove_old_effects();
 
+       void add_level();
+
 
        //returns game statistics
        double get_refresh();
        p get_start();
        int get_level();
+       int get_lives();
        vector<p>& get_path();
 
 };

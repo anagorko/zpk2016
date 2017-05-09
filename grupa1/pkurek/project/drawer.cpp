@@ -70,19 +70,19 @@ void drawer::dr_stats(double money, int life, int level) {
 }
 
 void drawer::dr_life(int life) {
-    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 
+    al_draw_text(fonts[0], al_map_rgba(200,200,200,255), 
             life_position.x, life_position.y, 0,
             ("Life " + to_string(life)).c_str() );
 }
 
 void drawer::dr_money(double money) {
-    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 
+    al_draw_text(fonts[0], al_map_rgba(200,200,200,255), 
             money_position.x, money_position.y, 0,
             ("Money " + to_string((int)money)).c_str() );
 }
 
 void drawer::dr_level(int level) {
-    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 
+    al_draw_text(fonts[0], al_map_rgba(200,200,200,255), 
             level_position.x, level_position.y, 0,
             ("Level " + to_string(level)).c_str() );
 }

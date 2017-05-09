@@ -26,7 +26,10 @@ void cpu::display_all() {
 }
 
 void cpu::add_laser(p position) {
-    turrets.push_back(new laser(this, position));
+    if(money - laser_cost > 0) {
+       money = money - laser_cost;
+       turrets.push_back(new laser(this, position));
+    }
 }
 
 double cpu::get_refresh() {return refresh;}
@@ -61,6 +64,7 @@ void cpu::deal_damage_to_enemy(int id, double damage) {
 }
 
 void cpu::kill_enemy(int id) {
+    money = money + (enemies[id] -> get_money());
     delete enemies[id];
     enemies.erase(enemies.begin() + id);
 }
@@ -79,4 +83,12 @@ void cpu::remove_old_effects() {
             effects.erase(effects.begin() + i);
         }
     }
+}
+
+void cpu::add_level() {
+    level++;
+}
+
+int cpu::get_lives() {
+    return lives;
 }

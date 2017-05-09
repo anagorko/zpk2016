@@ -9,8 +9,11 @@
 #include <stdio.h>
 
 
+const float FPS = 60;
 
 int main(int argc, char** argv) {
+    int run = 1;
+    bool make_turn = true;
     
     //inits
     al_init();
@@ -18,47 +21,71 @@ int main(int argc, char** argv) {
     al_init_font_addon();
     al_init_ttf_addon();
 
+
+    //devices
+    al_set_new_display_flags(ALLEGRO_WINDOWED);
+    ALLEGRO_DISPLAY* display = al_create_display(800, 600);
+    al_set_window_title(display, "Pfffffffff!");
+    ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
+    ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
+    if(!(display && event_queue && timer)) {run = 0;}
+
+    al_install_mouse();
     al_install_keyboard();
 
-    ALLEGRO_KEYBOARD_STATE klawiatura;
-    al_set_new_display_flags(ALLEGRO_WINDOWED);
-    ALLEGRO_DISPLAY* okno = al_create_display(800, 600);
-    al_set_window_title(okno, "Pfffffffff!");
+    al_register_event_source(event_queue, al_get_display_event_source(display));
+    al_register_event_source(event_queue, al_get_timer_event_source(timer));
+    al_register_event_source(event_queue, al_get_mouse_event_source());
+    
+    //**********************************
+    //game interface (queue loop)
+    cpu game;
+    al_clear_to_color(al_map_rgb(0,0,0));
+    al_flip_display();
+    al_rest(0.5);
+    al_start_timer(timer);
 
-    //fonts
-    ALLEGRO_FONT *courier16 = al_load_ttf_font("courier.ttf",16,0 );
-        if (!courier16){
-            fprintf(stderr, "Could not load courier16\n");
-            return -1;
+    int turn_counter = 0;
+
+    while(run) {
+        ALLEGRO_EVENT ev;
+        al_wait_for_event(event_queue, &ev);
+        
+        if(ev.type == ALLEGRO_EVENT_TIMER){
+            make_turn = true;
+        } else
+        if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+            break;
+        } else
+        if(ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+            game.add_laser(p(ev.mouse.x, ev.mouse.y));
         }
 
-    //**********************************
-    //tu piszemy faktyczny program
+        if(make_turn && al_is_event_queue_empty(event_queue)) {
+            make_turn = false;
 
-    cpu game;
-    game.add_laser(p(450,360));
-    game.add_laser(p(510,400));
-    game.add_laser(p(300,250));
-    game.add_basic_enemy();
+            if(turn_counter % 100 == 0) {
+                game.add_basic_enemy();
+            }
+            if(turn_counter % 1000 == 0) {
+                game.add_level();
+            }
 
-    for(int i = 0; i < 20; i++) {
-        for(int i = 0; i < 25; i++) {
             game.move_enemies();
             game.damage_enemies();
             game.display_all();
-            al_rest(0.01);
+            turn_counter ++;
+
+            if(game.get_lives() <= 0 ) {al_rest(2);break;}
         }
-        game.add_basic_enemy();
+        
     }
-    for(int i = 0; i < 2000; i++) {
-        game.move_enemies();
-        game.damage_enemies();
-        game.display_all();
-        al_rest(0.01);
-    }
+
     
     //**********************************
-    al_destroy_display(okno);
+    al_destroy_display(display);
+    al_destroy_timer(timer);
+    al_destroy_event_queue(event_queue);
 
     return 0;
 }
