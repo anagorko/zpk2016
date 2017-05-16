@@ -1,6 +1,9 @@
 #include "drawer.h"
 #include "cpu.h"
-drawer::drawer(){}
+drawer::drawer(cpu* _game){
+    game = _game;
+}
+drawer::drawer() {}
 
 void drawer::dr_background() {
     al_clear_to_color(al_map_rgba(bg_color.r, bg_color.g, bg_color.b, bg_color.a));
@@ -48,6 +51,14 @@ void drawer::dr_path(double path_radius, vector<p>& path) {
 void drawer::dr_turrets(vector<turret*>& turrets){
     for(int i = 0; i < turrets.size(); i++) {
         turrets[i] -> dr_turret();
+    }
+}
+
+void drawer::dr_ranges(vector<turret*>& turrets){
+    if((game -> get_show_range()) == 1) {
+        for(int i = 0; i < turrets.size(); i++) {
+            turrets[i] -> dr_range();
+        }
     }
 }
 

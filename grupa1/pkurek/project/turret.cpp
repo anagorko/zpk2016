@@ -4,7 +4,20 @@
 //turret - base class
 bool turret::enemy_in_range(enemy* suspect) {
     double distance = dist( (suspect -> get_position()) , position);
-    return (distance  <= range);
+    return (distance  <= get_range());
+}
+
+double turret::get_turret_size() {
+    return turret_size;
+}
+
+p& turret::get_position() {
+    return position;
+}
+
+void turret::dr_range() {
+    al_draw_circle(position.x, position.y, get_range(), 
+            al_map_rgba(30,30,30,0), 1);
 }
 
 //************************************************************
@@ -12,13 +25,18 @@ bool turret::enemy_in_range(enemy* suspect) {
 laser::laser(cpu* _game, p _position) {
     game = _game;
     position = _position;
+    turret_size = game -> get_laser_size();
+}
+
+double laser::get_range(){
+    return range;
 }
 
 void laser::dr_turret() {
-    al_draw_filled_circle(position.x, position.y, base_turret_size, 
+    al_draw_filled_circle(position.x, position.y, turret_size, 
                           al_map_rgba(255,255,255,255));
 
-    al_draw_circle(position.x, position.y, base_turret_size, 
+    al_draw_circle(position.x, position.y, turret_size, 
                    al_map_rgba(0,0,0,255),1);
 
     int size = 5 + turret_level * 2;
@@ -28,6 +46,7 @@ void laser::dr_turret() {
                      position.x + size * 0.866, position.y + size / 2,
                      al_map_rgba(0,0,0,255), 1);
 }
+
 
 void laser::make_shot(vector<enemy*>& enemies, string type) {
     if(delay > 0) {delay--; return;}
@@ -64,6 +83,9 @@ void burn::dr_turret() {
 void burn::make_shot(vector<enemy*>& enemies, string type) {
 }
 
+double burn::get_range(){
+    return range;
+}
 //************************************************************
 //lava - derived class
 lava::lava(p _position) {
@@ -75,4 +97,8 @@ void lava::dr_turret() {
 }
 
 void lava::make_shot(vector<enemy*>& enemies, string type) {
+}
+
+double lava::get_range(){
+    return range;
 }

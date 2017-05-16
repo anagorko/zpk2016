@@ -21,14 +21,15 @@ class cpu {
 
     private:
         int lives = 20;
-        int level = 1;
+        int level = 0;
         double speed = 10;
-        double money = 100;
+        double money = 140;
         int show_range = 1;
         p window_size = p(800,600);
         double path_radius = 30;
         double refresh = 60; //times per sec
         string shoot_type = "closest";
+        double laser_size = 15;
 
         double laser_cost = 30;
 
@@ -43,25 +44,30 @@ class cpu {
         vector<effect*> effects;
 
     public:
-       cpu();
+        cpu();
+        
+        bool is_turret_offboard(double turret_size, p turret_center);
+        bool is_turret_onpath(double turret_size, p turret_center);
+        bool is_turret_onturret(double turret_size, p turret_center);
+        bool is_turret_coliding(double turret_size, p turret_center);
 
-       bool is_inboard(p& A, vector<p>& board);
-       void display_all();
+        void display_all();
 
-       void add_laser(p position);
-       void add_basic_enemy();
-       void add_laser_effect(p& A, p& B);
+        void add_laser(p position);
+        void add_basic_enemy();
+        void add_laser_effect(p& A, p& B);
 
-       void move_enemies();
-       void damage_enemies();
+        void move_enemies();
+        void damage_enemies();
        
-       void enemy_scored(int k);
-       void deal_damage_to_enemy(int closest, double damage);
-       void kill_enemy(int id);
-       void remove_old_effects();
+        void enemy_scored(int k);
+        void deal_damage_to_enemy(int closest, double damage);
+        void kill_enemy(int id);
+        void remove_old_effects();
 
-       void add_level();
-
+        void add_level();
+        
+        void change_show_range_state();
 
        //returns game statistics
        double get_refresh();
@@ -69,6 +75,8 @@ class cpu {
        int get_level();
        int get_lives();
        vector<p>& get_path();
+       double get_laser_size();
+       int get_show_range();
 
 };
 

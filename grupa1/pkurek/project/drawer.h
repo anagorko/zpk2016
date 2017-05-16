@@ -18,6 +18,7 @@ class cpu;
 //class
 class drawer {
     private:
+        cpu* game;
         color bg_color = color(130,0,0,255);
         color border_color = color(0,0,50,255);
         color path_color = color(50,0,0,255);
@@ -32,6 +33,7 @@ class drawer {
 
     public:
         drawer();
+        drawer(cpu* game);
 
         void load_fonts();
 
@@ -39,6 +41,7 @@ class drawer {
         void dr_border();
         void dr_path(double path_radius, vector<p>& path);
         void dr_turrets(vector<turret*>& turrets);
+        void dr_ranges(vector<turret*>& turrets);
         void dr_enemies(vector<enemy*>& enemies);
         void dr_effects(vector<effect*>& effects);
 

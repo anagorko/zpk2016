@@ -22,6 +22,7 @@ p& enemy::get_position() {
 
 void enemy::deal_damage(int id, double damage) {
     hp = hp - damage;
+    size = start_size * ((hp + start_hp * 0.3 ) / (start_hp * 1.3));
     if(hp <= 0) {
         game -> kill_enemy(id);
     }
@@ -51,7 +52,9 @@ basic_enemy::basic_enemy(cpu* _game) {
     game = _game;
     position = game -> get_start();
     hp = base_hp + base_hp * (game -> get_level()) * (game -> get_level());
-    size = base_size + (game -> get_level());
+    start_hp = hp;
+    start_size = base_size + (game -> get_level());
+    size = start_size;
     speed = enemy_speed;
     money = base_money + base_money * (game -> get_level()) / 2;
 }

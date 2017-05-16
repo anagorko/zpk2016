@@ -20,6 +20,8 @@ class enemy {
         double size;
         double speed;
         double money;
+        double start_hp;
+        double start_size;
         
     public:
         virtual void dr_enemy() = 0;

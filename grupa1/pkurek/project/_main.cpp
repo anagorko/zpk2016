@@ -13,7 +13,7 @@ const float FPS = 60;
 
 int main(int argc, char** argv) {
     int run = 1;
-    bool make_turn = true;
+    bool redraw = true;
     
     //inits
     al_init();
@@ -36,6 +36,7 @@ int main(int argc, char** argv) {
     al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_mouse_event_source());
+    al_register_event_source(event_queue, al_get_keyboard_event_source());
     
     //**********************************
     //game interface (queue loop)
@@ -52,17 +53,28 @@ int main(int argc, char** argv) {
         al_wait_for_event(event_queue, &ev);
         
         if(ev.type == ALLEGRO_EVENT_TIMER){
-            make_turn = true;
+            game.move_enemies();
+            game.damage_enemies();
+            redraw = true;
         } else
         if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             break;
         } else
         if(ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             game.add_laser(p(ev.mouse.x, ev.mouse.y));
+        } else
+        if(ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+            if(ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+                break;
+            } else
+            if(ev.keyboard.keycode == ALLEGRO_KEY_R) {
+                game.change_show_range_state();
+            }
         }
 
-        if(make_turn && al_is_event_queue_empty(event_queue)) {
-            make_turn = false;
+
+        if(redraw && al_is_event_queue_empty(event_queue)) {
+            redraw = false;
 
             if(turn_counter % 100 == 0) {
                 game.add_basic_enemy();
@@ -71,8 +83,6 @@ int main(int argc, char** argv) {
                 game.add_level();
             }
 
-            game.move_enemies();
-            game.damage_enemies();
             game.display_all();
             turn_counter ++;
 

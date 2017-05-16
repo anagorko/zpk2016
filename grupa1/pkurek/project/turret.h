@@ -18,15 +18,18 @@ class turret {
         p position;
         int turret_level = 1;
         double damage = 20;
-        double base_turret_size = 15;
+        double turret_size;
         int delay = 0;
         int delay_after_shot = 120;
-        double range = 0;
 
     public:
+        virtual double get_range() = 0;
         virtual void dr_turret() = 0;
         virtual void make_shot(vector<enemy*>& enemies, string type) = 0;
         bool enemy_in_range(enemy* suspect); 
+        double get_turret_size();
+        p& get_position();
+        void dr_range();
 
 };
 
@@ -39,25 +42,30 @@ class laser : public turret {
         laser(cpu* _game, p _position);
         virtual void dr_turret();
         virtual void make_shot(vector<enemy*>& enemies, string type);
+        virtual double get_range();
 
 };
 
 class burn : public turret {
     private:
+        double range = 100;
 
     public:
         burn(p _position);
         virtual void dr_turret();
         virtual void make_shot(vector<enemy*>& enemies, string type);
+        virtual double get_range();
 };
 
 class lava : public turret {
     private:
+        double range = 100;
 
     public:
         lava(p _position);
         virtual void dr_turret();
         virtual void make_shot(vector<enemy*>& enemies, string type);
+        virtual double get_range();
 
 };
 
