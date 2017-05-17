@@ -53,6 +53,7 @@ void cpu::display_all() {
     paint.dr_ranges(turrets);
     paint.dr_effects(effects);
     remove_old_effects();
+    draw_placer();
     paint.dr_border();
     paint.dr_stats(money, lives, level);
     al_flip_display();
@@ -138,5 +139,37 @@ void cpu::change_show_range_state() {
     if(show_range == 0) {show_range = 1;}
 }
 
+void cpu::draw_placer() {
+    if(placer.size() > 0) {
+        placer[0] -> dr_turret();
+        placer[0] -> dr_range();
+    }
+}
 
+void cpu::add_placer(string type) {
+    remove_placer();
+    if(type == "laser") {
+        placer.push_back(new laser(this, p(0,0)));
+    }
+}
 
+void cpu::remove_placer() {
+    if(placer.size() > 0) {
+        delete placer[0];
+        placer.clear();
+    }
+}
+
+void cpu::set_placer(p position) {
+    if(placer.size() > 0) {
+
+        placer[0] -> set_position(position);
+
+        if(is_turret_coliding((placer[0] -> get_turret_size()) , position)) {
+            placer[0] -> set_fill(cant_place_fill);
+        } else {
+            placer[0] -> set_fill(can_place_fill);
+        }
+
+    }
+}

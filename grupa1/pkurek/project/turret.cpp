@@ -15,9 +15,23 @@ p& turret::get_position() {
     return position;
 }
 
+void turret::set_position(p _position) {
+    position = _position;
+}
+
 void turret::dr_range() {
     al_draw_circle(position.x, position.y, get_range(), 
             al_map_rgba(30,30,30,0), 1);
+}
+
+turret::~turret() {}
+
+void turret::set_fill(color _fill) {
+    fill = _fill;
+}
+
+void turret::set_border(color _border) {
+    border = _border;
 }
 
 //************************************************************
@@ -28,23 +42,25 @@ laser::laser(cpu* _game, p _position) {
     turret_size = game -> get_laser_size();
 }
 
+laser::~laser() {}
+
 double laser::get_range(){
     return range;
 }
 
 void laser::dr_turret() {
     al_draw_filled_circle(position.x, position.y, turret_size, 
-                          al_map_rgba(255,255,255,255));
+                          al_map_rgba(fill.r,fill.g,fill.b,fill.a));
 
     al_draw_circle(position.x, position.y, turret_size, 
-                   al_map_rgba(0,0,0,255),1);
+                   al_map_rgba(border.r,border.g,border.b,border.a),1);
 
     int size = 5 + turret_level * 2;
 
     al_draw_triangle(position.x, position.y - size,
                      position.x - size * 0.866, position.y + size / 2,
                      position.x + size * 0.866, position.y + size / 2,
-                     al_map_rgba(0,0,0,255), 1);
+                     al_map_rgba(border.r,border.g,border.b,border.a), 1);
 }
 
 
@@ -77,6 +93,8 @@ burn::burn(p _position) {
     position = _position;
 }
 
+burn::~burn() {}
+
 void burn::dr_turret() {
 }
 
@@ -91,6 +109,8 @@ double burn::get_range(){
 lava::lava(p _position) {
     position = _position;
 }
+
+lava::~lava() {}
 
 void lava::dr_turret() {
 

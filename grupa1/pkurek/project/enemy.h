@@ -46,7 +46,7 @@ class basic_enemy : public enemy {
     public:
         basic_enemy(cpu* _game);
         virtual void dr_enemy();
-        ~basic_enemy();
+        virtual ~basic_enemy();
 };
 
 #endif

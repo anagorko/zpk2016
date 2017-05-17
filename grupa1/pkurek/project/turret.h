@@ -21,15 +21,22 @@ class turret {
         double turret_size;
         int delay = 0;
         int delay_after_shot = 120;
+        color fill = color(255,255,255,255);
+        color border = color(0,0,0,255);
 
     public:
         virtual double get_range() = 0;
         virtual void dr_turret() = 0;
+        void dr_range();
         virtual void make_shot(vector<enemy*>& enemies, string type) = 0;
         bool enemy_in_range(enemy* suspect); 
         double get_turret_size();
         p& get_position();
-        void dr_range();
+        void set_position(p _position);
+        virtual ~turret();
+
+        void set_fill(color _fill);
+        void set_border(color _border);
 
 };
 
@@ -43,6 +50,7 @@ class laser : public turret {
         virtual void dr_turret();
         virtual void make_shot(vector<enemy*>& enemies, string type);
         virtual double get_range();
+        virtual ~laser();
 
 };
 
@@ -55,6 +63,7 @@ class burn : public turret {
         virtual void dr_turret();
         virtual void make_shot(vector<enemy*>& enemies, string type);
         virtual double get_range();
+        virtual ~burn();
 };
 
 class lava : public turret {
@@ -66,6 +75,7 @@ class lava : public turret {
         virtual void dr_turret();
         virtual void make_shot(vector<enemy*>& enemies, string type);
         virtual double get_range();
+        virtual ~lava();
 
 };
 

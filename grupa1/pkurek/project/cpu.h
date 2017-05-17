@@ -26,11 +26,12 @@ class cpu {
         double money = 140;
         int show_range = 1;
         p window_size = p(800,600);
-        double path_radius = 30;
+        double path_radius = 25;
         double refresh = 60; //times per sec
-        string shoot_type = "closest";
-        double laser_size = 15;
 
+        string shoot_type = "closest";
+
+        double laser_size = 15;
         double laser_cost = 30;
 
         vector<p> board = {p(100,100), p(700, 100), p(700,500), p(100, 500)}; 
@@ -42,6 +43,10 @@ class cpu {
         vector<turret*> turrets;
         vector<enemy*> enemies;
         vector<effect*> effects;
+
+        vector<turret*> placer;
+        color cant_place_fill = color(255,0,0,255);
+        color can_place_fill = color(0,255,0,255);
 
     public:
         cpu();
@@ -57,6 +62,11 @@ class cpu {
         void add_basic_enemy();
         void add_laser_effect(p& A, p& B);
 
+        void add_placer(string type);
+        void remove_placer();
+        void draw_placer();
+        void set_placer(p position);
+
         void move_enemies();
         void damage_enemies();
        
@@ -69,14 +79,15 @@ class cpu {
         
         void change_show_range_state();
 
+
        //returns game statistics
-       double get_refresh();
-       p get_start();
-       int get_level();
-       int get_lives();
-       vector<p>& get_path();
-       double get_laser_size();
-       int get_show_range();
+        double get_refresh();
+        p get_start();
+        int get_level();
+        int get_lives();
+        vector<p>& get_path();
+        double get_laser_size();
+        int get_show_range();
 
 };
 
