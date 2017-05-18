@@ -78,6 +78,13 @@ void drawer::dr_stats(double money, int life, int level) {
     dr_money(money);
     dr_life(life);
     dr_level(level);
+    dr_note();
+}
+
+void drawer::dr_note() {
+    al_draw_text(fonts[0], al_map_rgba(200,200,200,255),
+            note_position.x, note_position.y, 0,
+            "Press H for HELP");
 }
 
 void drawer::dr_life(int life) {
@@ -103,4 +110,25 @@ void drawer::load_fonts() {
     if(!fonts[0]) {
         fprintf(stderr, "could not load font courier16");
     }
+}
+
+void drawer::dr_help() {
+    al_draw_filled_rectangle(200,180,600,420,al_map_rgba(0,0,0,255));
+    al_draw_filled_rectangle(220,200,580,400,al_map_rgba(150,150,150,255));
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 210, 0, "Help:");
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 230, 0, 
+            "H - this help");
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 250, 0, 
+            "P - pause game ON/OFF");
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 270, 0, 
+            "R - show range ON/OFF");
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 290, 0, 
+            "L - place Laser turret");
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 310, 0, 
+            "SPACE - unleash enemies!");
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 330, 0, 
+            "ESC - quit game");
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 380, 0, 
+            "Press ANY key to continue");
+    
 }

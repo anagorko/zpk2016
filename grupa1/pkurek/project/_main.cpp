@@ -43,12 +43,13 @@ int main(int argc, char** argv) {
     cpu game;
     string placer = "none";
     p last_mouse_position;
+    bool pause;
+    string display_status = "game";
+
     al_clear_to_color(al_map_rgb(0,0,0));
     al_flip_display();
     al_rest(0.5);
     al_start_timer(timer);
-
-    int turn_counter = 0;
 
     while(run) { 
         ALLEGRO_EVENT ev; 
@@ -59,15 +60,16 @@ int main(int argc, char** argv) {
             last_mouse_position = p(ev.mouse.x, ev.mouse.y);
         } //no else
         
-        if((placer != "none") && 
-                (ev.type == ALLEGRO_EVENT_MOUSE_AXES || 
+        if((placer != "none") &&
+                (ev.type == ALLEGRO_EVENT_MOUSE_AXES ||
                  ev.type == ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY)) {
             game.set_placer(p(ev.mouse.x, ev.mouse.y));
-        } else 
+        } else
         if(ev.type == ALLEGRO_EVENT_TIMER){
-            game.move_enemies();
-            game.damage_enemies();
             redraw = true;
+            if(!pause){
+                game.make_turn();
+            }
         } else
         if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             break;
@@ -78,6 +80,10 @@ int main(int argc, char** argv) {
             game.remove_placer();
         } else
         if(ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+            if(display_status == "help") {
+                display_status = "game"; 
+                pause = false;
+            } else
             if(ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
                 break;
             } else
@@ -92,21 +98,28 @@ int main(int argc, char** argv) {
             if(ev.keyboard.keycode == ALLEGRO_KEY_Q) {
                 placer = "none";
                 game.remove_placer();
+            } else
+            if(ev.keyboard.keycode == ALLEGRO_KEY_P) {
+                if(pause == true) {pause = false;} else {pause = true;}
+            } else
+            if(ev.keyboard.keycode == ALLEGRO_KEY_H) {
+                if(display_status == "help") {display_status = "game"; pause = false;} 
+                else if(display_status == "game") {display_status = "help"; pause = true;}
+            } else
+            if(ev.keyboard.keycode == ALLEGRO_KEY_SPACE) {
+                pause = false;
+                game.unleash_enemies_true();
             }
-        } 
+        }
 
         if(redraw && al_is_event_queue_empty(event_queue)) {
             redraw = false;
 
-            if(turn_counter % 100 == 0) {
-                game.add_basic_enemy();
+            if(display_status == "game") {
+                game.display_all();
+            } else if(display_status == "help") {
+                game.display_help();
             }
-            if(turn_counter % 1000 == 0) {
-                game.add_level();
-            }
-
-            game.display_all();
-            turn_counter ++;
 
             if(game.get_lives() <= 0 ) {al_rest(2);break;}
         }

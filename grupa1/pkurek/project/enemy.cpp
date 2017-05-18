@@ -61,3 +61,28 @@ basic_enemy::basic_enemy(cpu* _game) {
 
 
 basic_enemy::~basic_enemy(){}
+//************************************************************
+//speeder - derived class
+void speeder::dr_enemy() {
+    al_draw_filled_circle(position.x, position.y, size,
+            al_map_rgba(enemy_color.r, enemy_color.g, 
+                enemy_color.b, enemy_color.a));
+    
+    al_draw_circle(position.x, position.y, size,
+            al_map_rgba(enemy_color.r, enemy_color.g, 
+                enemy_color.b, enemy_color.a), 2);
+        
+}
+
+speeder::speeder(cpu* _game) {
+    game = _game;
+    position = game -> get_start();
+    hp = base_hp + base_hp * (game -> get_level()) * (game -> get_level());
+    start_hp = hp;
+    start_size = base_size + (game -> get_level());
+    size = start_size;
+    speed = enemy_speed;
+    money = base_money + base_money * (game -> get_level()) / 2;
+}
+
+speeder::~speeder(){}

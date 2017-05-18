@@ -21,13 +21,20 @@ class cpu {
 
     private:
         int lives = 20;
-        int level = 0;
+
+        int level = 1;
+        int enemies_unleashed = 0;
+        bool unleash_enemies = false;
+        bool weave_in_progress = false;
+        
+
         double speed = 10;
         double money = 140;
         int show_range = 1;
         p window_size = p(800,600);
         double path_radius = 25;
         double refresh = 60; //times per sec
+        int turn = 1;
 
         string shoot_type = "closest";
 
@@ -57,25 +64,31 @@ class cpu {
         bool is_turret_coliding(double turret_size, p turret_center);
 
         void display_all();
+        void display_help();
 
         void add_laser(p position);
         void add_basic_enemy();
+        void add_speeder();
         void add_laser_effect(p& A, p& B);
+
 
         void add_placer(string type);
         void remove_placer();
         void draw_placer();
         void set_placer(p position);
 
+        void make_turn();
         void move_enemies();
         void damage_enemies();
+        void decrease_effect_durability();
+        void unleash();
+        void unleash_weave_of_basic_enemies();
+        void unleash_weave_of_speeders();
+        void unleash_enemies_true();
        
         void enemy_scored(int k);
         void deal_damage_to_enemy(int closest, double damage);
         void kill_enemy(int id);
-        void remove_old_effects();
-
-        void add_level();
         
         void change_show_range_state();
 

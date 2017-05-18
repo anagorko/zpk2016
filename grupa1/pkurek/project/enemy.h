@@ -34,6 +34,8 @@ class enemy {
 
 };
 
+//************************************************************
+//basic_enemy - derived class
 class basic_enemy : public enemy {
     private:
         double base_hp = 2;
@@ -47,6 +49,24 @@ class basic_enemy : public enemy {
         basic_enemy(cpu* _game);
         virtual void dr_enemy();
         virtual ~basic_enemy();
+};
+
+//************************************************************
+//speeder - derived class
+class speeder : public enemy {
+    private:
+        double base_hp = 0.25;
+        double base_size = 3;
+        double enemy_speed = 200;
+        double base_money = 0.25;
+
+        color enemy_color = color(0,153,153,255);
+
+    public:
+    
+        speeder(cpu* _game);
+        virtual void dr_enemy();
+        virtual ~speeder();
 };
 
 #endif

@@ -17,6 +17,7 @@ class effect {
         virtual void dr_effect(int id) = 0;
         virtual ~effect();
         int get_show_by();
+        void decrease_duration();
 };
 
 //derived classes:

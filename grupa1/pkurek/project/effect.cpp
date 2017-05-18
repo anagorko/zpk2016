@@ -6,6 +6,10 @@
 effect::~effect() {}
 
 int effect::get_show_by() {return show_by;}
+
+void effect::decrease_duration() {
+    show_by--;
+}
 //************************************************************
 //laser effect methods
 
@@ -15,6 +19,6 @@ void laser_effect::dr_effect(int id){
     al_draw_line(A.x, A.y, B.x, B.y,
             al_map_rgba(effect_color.r, effect_color.g, 
                         effect_color.b, effect_color.a), line_size);
-    show_by--;
 }
+
 //************************************************************

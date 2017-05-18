@@ -30,6 +30,7 @@ class drawer {
         p level_position = p(50,50); 
         p life_position = p(150,50); 
         p money_position = p(250,50); 
+        p note_position = p(10,580);
 
     public:
         drawer();
@@ -44,11 +45,13 @@ class drawer {
         void dr_ranges(vector<turret*>& turrets);
         void dr_enemies(vector<enemy*>& enemies);
         void dr_effects(vector<effect*>& effects);
+        void dr_help();
 
         void dr_stats(double money, int life, int level);
         void dr_money(double money);
         void dr_life(int life);
         void dr_level(int level);
+        void dr_note();
 
         void set_window_size(p _window_size);
         void set_board(vector<p>& board);

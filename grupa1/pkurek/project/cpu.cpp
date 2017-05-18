@@ -52,7 +52,20 @@ void cpu::display_all() {
     paint.dr_turrets(turrets);
     paint.dr_ranges(turrets);
     paint.dr_effects(effects);
-    remove_old_effects();
+    draw_placer();
+    paint.dr_border();
+    paint.dr_stats(money, lives, level);
+    al_flip_display();
+}
+
+void cpu::display_help() {
+    paint.dr_background();
+    paint.dr_path(path_radius, path);
+    paint.dr_enemies(enemies);
+    paint.dr_turrets(turrets);
+    paint.dr_ranges(turrets);
+    paint.dr_effects(effects);
+    paint.dr_help();
     draw_placer();
     paint.dr_border();
     paint.dr_stats(money, lives, level);
@@ -67,6 +80,14 @@ void cpu::add_laser(p position) {
     }
 }
 
+void cpu::add_basic_enemy() {
+    enemies.push_back(new basic_enemy(this));
+}
+
+void cpu::add_speeder() {
+    enemies.push_back(new speeder(this));
+}
+
 double cpu::get_refresh() {return refresh;}
 
 p cpu::get_start() {return path[0];}
@@ -77,9 +98,6 @@ vector<p>& cpu::get_path() {return path;}
 
 int cpu::get_show_range() {return show_range;}
 
-void cpu::add_basic_enemy() {
-    enemies.push_back(new basic_enemy(this));
-}
 
 void cpu::add_laser_effect(p& A, p& B){
     effects.push_back(new laser_effect(A, B));
@@ -88,6 +106,13 @@ void cpu::add_laser_effect(p& A, p& B){
 void cpu::enemy_scored(int k){
     lives--;
     kill_enemy(k);
+}
+
+void cpu::make_turn() {
+    move_enemies();
+    damage_enemies();
+    decrease_effect_durability();
+    unleash();
 }
 
 void cpu::move_enemies(){
@@ -112,8 +137,12 @@ void cpu::damage_enemies() {
     }
 }
 
-
-void cpu::remove_old_effects() {
+void cpu::decrease_effect_durability() {
+    //decreases effect durability:
+    for(int i = 0; i < effects.size(); i++) {
+        effects[i] -> decrease_duration();
+    }
+    //removes old effects:
     for(int i = effects.size() - 1; i >= 0; i--) {
         if(effects[i] -> get_show_by() < 0) {
             delete effects[i];
@@ -122,8 +151,46 @@ void cpu::remove_old_effects() {
     }
 }
 
-void cpu::add_level() {
-    level++;
+void cpu::unleash() {
+    if(level % 2 == 1) {
+        unleash_weave_of_basic_enemies();
+    } else {
+    unleash_weave_of_speeders();
+    }
+}
+
+void cpu::unleash_weave_of_basic_enemies() {
+    if((turn % 80 == 1) && unleash_enemies) {
+        add_basic_enemy();
+    }
+    if(turn % 800 == 0) {
+        unleash_enemies = false;}
+    if(weave_in_progress && (enemies.size() == 0) && (!unleash_enemies)) {
+        level++;    
+        weave_in_progress = false;
+    }
+    turn++;
+}
+
+void cpu::unleash_weave_of_speeders() {
+    if((turn % 20 == 1) && unleash_enemies) {
+        add_speeder();
+    }
+    if(turn % 800 == 0) {
+        unleash_enemies = false;}
+    if(weave_in_progress && (enemies.size() == 0) && (!unleash_enemies)) {
+        level++;    
+        weave_in_progress = false;
+    }
+    turn++;
+}
+
+void cpu::unleash_enemies_true() {
+    if(!weave_in_progress) {
+        turn = 1;
+        unleash_enemies = true;
+        weave_in_progress = true;
+    }
 }
 
 int cpu::get_lives() {
