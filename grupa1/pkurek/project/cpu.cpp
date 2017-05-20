@@ -74,9 +74,25 @@ void cpu::display_help() {
 
 void cpu::add_laser(p position) {
     if(is_turret_coliding(laser_size, position)) {return;}
-    if(money - laser_cost > 0) {
+    if(money - laser_cost >= 0) {
        money = money - laser_cost;
        turrets.push_back(new laser(this, position));
+    }
+}
+
+void cpu::add_burn(p position) {
+    if(is_turret_coliding(burn_size, position)) {return;}
+    if(money - burn_cost >= 0) {
+       money = money - burn_cost;
+       turrets.push_back(new burn(this, position));
+    }
+}
+
+void cpu::add_ice(p position) {
+    if(is_turret_coliding(ice_size, position)) {return;}
+    if(money - ice_cost >= 0) {
+       money = money - ice_cost;
+       turrets.push_back(new ice(this, position));
     }
 }
 
@@ -86,6 +102,10 @@ void cpu::add_basic_enemy() {
 
 void cpu::add_speeder() {
     enemies.push_back(new speeder(this));
+}
+
+void cpu::add_boss() {
+    enemies.push_back(new boss(this));
 }
 
 double cpu::get_refresh() {return refresh;}
@@ -101,6 +121,14 @@ int cpu::get_show_range() {return show_range;}
 
 void cpu::add_laser_effect(p& A, p& B){
     effects.push_back(new laser_effect(A, B));
+}
+
+void cpu::add_burn_effect(p& A, p& B){
+    effects.push_back(new burn_effect(A, B));
+}
+
+void cpu::add_ice_effect(p& turret_position, double turret_range){
+    effects.push_back(new ice_effect(turret_position, turret_range));
 }
 
 void cpu::enemy_scored(int k){
@@ -152,6 +180,9 @@ void cpu::decrease_effect_durability() {
 }
 
 void cpu::unleash() {
+    if(level % 5 == 0) {
+        unleash_weave_of_boss();
+    } else
     if(level % 2 == 1) {
         unleash_weave_of_basic_enemies();
     } else {
@@ -160,27 +191,47 @@ void cpu::unleash() {
 }
 
 void cpu::unleash_weave_of_basic_enemies() {
-    if((turn % 80 == 1) && unleash_enemies) {
+    if((turn % basic_enemy_delay == 1) && unleash_enemies) {
         add_basic_enemy();
+        unleashed_enemies_number ++;
     }
-    if(turn % 800 == 0) {
-        unleash_enemies = false;}
+    if(unleashed_enemies_number == basic_enemies_in_weave) {
+        unleash_enemies = false;
+    }
     if(weave_in_progress && (enemies.size() == 0) && (!unleash_enemies)) {
         level++;    
         weave_in_progress = false;
+        unleashed_enemies_number = 0;
     }
     turn++;
 }
 
 void cpu::unleash_weave_of_speeders() {
-    if((turn % 20 == 1) && unleash_enemies) {
+    if((turn % speeder_delay == 1) && unleash_enemies) {
         add_speeder();
+        unleashed_enemies_number ++;
     }
-    if(turn % 800 == 0) {
+    if(unleashed_enemies_number >= speeder_in_weave) {
         unleash_enemies = false;}
     if(weave_in_progress && (enemies.size() == 0) && (!unleash_enemies)) {
         level++;    
         weave_in_progress = false;
+        unleashed_enemies_number = 0;
+    }
+    turn++;
+}
+
+void cpu::unleash_weave_of_boss() {
+    if((turn % boss_delay == 1) && unleash_enemies) {
+        add_boss();
+        unleashed_enemies_number ++;
+    }
+    if(unleashed_enemies_number >= boss_in_weave) {
+        unleash_enemies = false;}
+    if(weave_in_progress && (enemies.size() == 0) && (!unleash_enemies)) {
+        level++;    
+        weave_in_progress = false;
+        unleashed_enemies_number = 0;
     }
     turn++;
 }
@@ -201,6 +252,14 @@ double cpu::get_laser_size() {
     return laser_size;
 }
 
+double cpu::get_burn_size() {
+    return burn_size;
+}
+
+double cpu::get_ice_size() {
+    return ice_size;
+}
+
 void cpu::change_show_range_state() {
     if(show_range == 1) {show_range = 0;} else
     if(show_range == 0) {show_range = 1;}
@@ -217,6 +276,10 @@ void cpu::add_placer(string type) {
     remove_placer();
     if(type == "laser") {
         placer.push_back(new laser(this, p(0,0)));
+    } else if (type == "burn") {
+        placer.push_back(new burn(this, p(0,0)));
+    } else if (type == "ice") {
+        placer.push_back(new ice(this, p(0,0)));
     }
 }
 

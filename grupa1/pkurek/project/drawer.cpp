@@ -96,8 +96,10 @@ void drawer::dr_life(int life) {
 void drawer::dr_money(double money) {
     al_draw_text(fonts[0], al_map_rgba(200,200,200,255), 
             money_position.x, money_position.y, 0,
-            ("Money " + to_string((int)money)).c_str() );
+            ("Money " + to_string((int)money) + "." + 
+             to_string((int)(money*100)%100)).c_str() );
 }
+//to_string((int)money)).c_str() + "." + 
 
 void drawer::dr_level(int level) {
     al_draw_text(fonts[0], al_map_rgba(200,200,200,255), 
@@ -113,8 +115,8 @@ void drawer::load_fonts() {
 }
 
 void drawer::dr_help() {
-    al_draw_filled_rectangle(200,180,600,420,al_map_rgba(0,0,0,255));
-    al_draw_filled_rectangle(220,200,580,400,al_map_rgba(150,150,150,255));
+    al_draw_filled_rectangle(200,180,600,430,al_map_rgba(0,0,0,255));
+    al_draw_filled_rectangle(220,200,580,410,al_map_rgba(150,150,150,255));
     al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 210, 0, "Help:");
     al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 230, 0, 
             "H - this help");
@@ -123,12 +125,16 @@ void drawer::dr_help() {
     al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 270, 0, 
             "R - show range ON/OFF");
     al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 290, 0, 
-            "L - place Laser turret");
+            "L - place Laser turret (30)");
     al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 310, 0, 
-            "SPACE - unleash enemies!");
+            "B - place Burn turret (20)");
     al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 330, 0, 
+            "I - place Ice turret (40)");
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 350, 0, 
+            "SPACE - unleash enemies");
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 370, 0, 
             "ESC - quit game");
-    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 380, 0, 
+    al_draw_text(fonts[0], al_map_rgba(0,0,0,255), 230, 390, 0, 
             "Press ANY key to continue");
     
 }

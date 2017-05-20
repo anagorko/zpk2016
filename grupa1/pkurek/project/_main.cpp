@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
     //devices
     al_set_new_display_flags(ALLEGRO_WINDOWED);
     ALLEGRO_DISPLAY* display = al_create_display(800, 600);
-    al_set_window_title(display, "Pfffffffff!");
+    al_set_window_title(display, "Shape Defender v.1.00");
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
     if(!(display && event_queue && timer)) {run = 0;}
@@ -79,6 +79,16 @@ int main(int argc, char** argv) {
             placer = "none";
             game.remove_placer();
         } else
+        if(placer == "ice" && ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+            game.add_ice(p(ev.mouse.x, ev.mouse.y));
+            placer = "none";
+            game.remove_placer();
+        } else
+        if(placer == "burn" && ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+            game.add_burn(p(ev.mouse.x, ev.mouse.y));
+            placer = "none";
+            game.remove_placer();
+        } else
         if(ev.type == ALLEGRO_EVENT_KEY_DOWN) {
             if(display_status == "help") {
                 display_status = "game"; 
@@ -93,6 +103,16 @@ int main(int argc, char** argv) {
             if(ev.keyboard.keycode == ALLEGRO_KEY_L) {
                 placer = "laser";
                 game.add_placer("laser");
+                game.set_placer(last_mouse_position);
+            } else
+            if(ev.keyboard.keycode == ALLEGRO_KEY_B) {
+                placer = "burn";
+                game.add_placer("burn");
+                game.set_placer(last_mouse_position);
+            } else
+            if(ev.keyboard.keycode == ALLEGRO_KEY_I) {
+                placer = "ice";
+                game.add_placer("ice");
                 game.set_placer(last_mouse_position);
             } else
             if(ev.keyboard.keycode == ALLEGRO_KEY_Q) {

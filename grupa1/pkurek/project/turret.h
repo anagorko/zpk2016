@@ -17,11 +17,9 @@ class turret {
         cpu* game;
         p position;
         int turret_level = 1;
-        double damage = 20;
         double turret_size;
         int delay = 0;
-        int delay_after_shot = 120;
-        color fill = color(255,255,255,255);
+        color fill = color(205,205,205,255);
         color border = color(0,0,0,255);
 
     public:
@@ -44,6 +42,8 @@ class turret {
 class laser : public turret {
     private:
         double range = 100;
+        double damage = 200;
+        int delay_after_shot = 120;
 
     public:
         laser(cpu* _game, p _position);
@@ -56,26 +56,32 @@ class laser : public turret {
 
 class burn : public turret {
     private:
-        double range = 100;
+        double range = 70;
+        double damage = 0.05;
+        int delay_after_shot = 0;
+        double make_vunerable_by = 1.001;
 
     public:
-        burn(p _position);
+        burn(cpu* _game, p _position);
         virtual void dr_turret();
         virtual void make_shot(vector<enemy*>& enemies, string type);
         virtual double get_range();
         virtual ~burn();
 };
 
-class lava : public turret {
+class ice : public turret {
     private:
-        double range = 100;
+        double range = 150;
+        double damage = 20;
+        int delay_after_shot = 250;
+        int ice_time = 500;
 
     public:
-        lava(p _position);
+        ice(cpu* _game, p _position);
         virtual void dr_turret();
         virtual void make_shot(vector<enemy*>& enemies, string type);
         virtual double get_range();
-        virtual ~lava();
+        virtual ~ice();
 
 };
 
