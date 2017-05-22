@@ -21,7 +21,9 @@ class enemy {
         double grow_speed = 0.5;
         double speed;
         double money;
-        double money_grow = 0.7;
+        double money_grow = 0.35;
+        double money_grow_exp = 0.5;
+        double decline_money = 0.2;
         double start_hp;
         double start_size;
         double damage_multiplier = 1;
@@ -57,7 +59,7 @@ class basic_enemy : public enemy {
         double base_money = 0.2;
 
         color enemy_color = color(120, 120, 0, 128);
-        color iced_color = color(120, 120, 100, 128);
+        color iced_color = color(120, 120, 200, 128);
 
     public:
         basic_enemy(cpu* _game);

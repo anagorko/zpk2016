@@ -94,9 +94,9 @@ int main(int argc, char** argv) {
                 display_status = "game"; 
                 pause = false;
             } else
-            if(ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+            /*if(ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
                 break;
-            } else
+            } else*/
             if(ev.keyboard.keycode == ALLEGRO_KEY_R) {
                 game.change_show_range_state();
             } else

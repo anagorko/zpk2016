@@ -50,7 +50,7 @@ class cpu {
         int boss_in_weave = 3;
         int basic_enemy_delay = 60;
         int speeder_delay = 20;
-        int boss_delay = 1000;
+        int boss_delay = 300;
 
         vector<p> board = {p(100,100), p(700, 100), p(700,500), p(100, 500)}; 
             // vector of four points - clockwise

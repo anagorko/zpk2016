@@ -89,7 +89,9 @@ basic_enemy::basic_enemy(cpu* _game) {
     start_size = base_size + (grow_speed * (game -> get_level()));
     size = start_size;
     speed = enemy_speed;
-    money = money_grow * base_money * (game -> get_level()) / 2;
+    money = money_grow * base_money * (game -> get_level());
+    money = pow(money / decline_money, money_grow_exp) * decline_money;
+
 }
 
 basic_enemy::~basic_enemy(){}
@@ -117,7 +119,8 @@ speeder::speeder(cpu* _game) {
     start_size = base_size + (grow_speed * (game -> get_level()));
     size = start_size;
     speed = enemy_speed;
-    money = money_grow * base_money * (game -> get_level()) / 2;
+    money = money_grow * base_money * (game -> get_level());
+    money = pow(money, money_grow_exp);
 }
 
 speeder::~speeder(){}
@@ -146,7 +149,8 @@ boss::boss(cpu* _game) {
     start_size = base_size + (grow_speed * (game -> get_level()));
     size = start_size;
     speed = enemy_speed;
-    money = money_grow *  base_money * (game -> get_level()) / 2;
+    money = money_grow * base_money * (game -> get_level());
+    money = pow(money, money_grow_exp);
 }
 
 boss::~boss(){}
