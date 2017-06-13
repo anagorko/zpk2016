@@ -270,17 +270,17 @@ The results across different approach are quite the same for all three linear mo
 
 Plots for 1 milion observations, 7 independent variables and 100 levels for a grouping variable:
 
-![""](C:/Users/user/Desktop/Imputations/Imput/g1.png)
+![""](./g1.png)
 
-![""](C:/Users/user/Desktop/Imputations/Imput/g2.png)
+![""](./g2.png)
 
 
-![""](C:/Users/user/Desktop/Imputations/Imput/g3.png)
+![""](./g3.png)
 
-![""](C:/Users/user/Desktop/Imputations/Imput/g4.png)
+![""](./g4.png)
 
-![""](C:/Users/user/Desktop/Imputations/Imput/g5.png)
+![""](./g5.png)
 
-![""](C:/Users/user/Desktop/Imputations/Imput/g6.png)
+![""](./g6.png)
 
-![""](C:/Users/user/Desktop/Imputations/Imput/g7.png)
+![""](./g7.png)
