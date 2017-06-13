@@ -12,7 +12,7 @@ p_load(Rcpp,
 set.seed(1234)
 
 sourceCpp("C:/Users/user/Desktop/Imputations/Imput/corrData.cpp")
-sourceCpp("C:/Users/user/Desktop/Imputations/Imput/impute.cpp")
+sourceCpp("C:/Users/user/Desktop/Imputations/Imput/miceFast.cpp")
 
 #parameters
 
