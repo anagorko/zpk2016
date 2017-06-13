@@ -159,7 +159,7 @@ round(cor(data_con),3)
 Loading miceFast module:
 
 ```{r,echo=TRUE}
-sourceCpp("C:/Users/user/Desktop/Imputations/Imput/impute.cpp")
+sourceCpp("C:/Users/user/Desktop/Imputations/Imput/miceFast.cpp")
 ```
 
 Building miceFast objects - a simple model or with a grouping variable:
