@@ -158,12 +158,12 @@ public:
 				}
 		if (p.x == -1) cerr << "Nie ma gracza na planszy!" << endl;
 	}
-	inline void move(int dx, int dy){
+	 void move(int dx, int dy){
 		p.x += dx;
 		p.y += dy;
 		return;
 	}
-	inline void move(kierunek k){
+	 void move(kierunek k){
 		this->move(k.dx, k.dy);
 		return;
 	}
@@ -182,13 +182,9 @@ public:
 		wy = m.size();
 		sz = m[0].size();
 	}
-	plansza(int i){
-		string path = lev_path + "/" + "lev1.txt";
-		m = *read_level(path);
-		wy = m.size();
-		sz = m[0].size();
-	}
-	// Logika poruszania się
+	
+				
+		// Logika poruszania się
 	bool move(gracz& g, kierunek k){
 		pozycja pnew = g.p + k;
 		pozycja pnew2 = g.p + 2 * k;
